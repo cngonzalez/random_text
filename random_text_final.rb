@@ -1,10 +1,8 @@
-require 'pry'
-
 def markov(file_path, level, char_length)
 
 	text = File.read(file_path)
 
-	seed_hash = make_hash(collect_seeds(text, level), level)
+	seed_hash = make_hash(collect_seeds(text, level))
 
 	max_amt = seed_hash.max_by{|key, value| value.length}.flatten.length - 1
 
@@ -21,9 +19,9 @@ def markov(file_path, level, char_length)
 
 end
 
-def make_hash(seeds, level)
+def make_hash(seeds)
 	seed_hash = {}
-	seeds.each_with_index {|seed, index| seed_hash[seed] = []}
+	seeds.each{|seed, index| seed_hash[seed] = []}
 	seeds.each_with_index do |seed, index|
 		if index < seeds.length - 1
 			next_letter = seeds[index + 1][-1]
@@ -61,4 +59,4 @@ def collect_seeds(text, level)
 	seeds.compact! #removes the "nils" collect returns when i didn't operate on items
 end
 
-markov("TaleOfTwoCities.txt", 5, 1000)
+# markov("TaleOfTwoCities.txt", 5, 1000) just test text :) uncomment to see it work.
